@@ -1,0 +1,55 @@
+class Solution {
+    public int numTeams(int[] rating) {
+        int n = rating.length;
+        int count = 0;
+
+        for (int j = 1; j < n - 1; j++) {
+            int leftSmaller = 0, leftGreater = 0;
+            int rightSmaller = 0, rightGreater = 0;
+
+            for (int i = 0; i < j; i++) {
+                if (rating[i] < rating[j]) {
+                    leftSmaller++;
+                } else if (rating[i] > rating[j]) {
+                    leftGreater++;
+                }
+            }
+
+            for (int k = j + 1; k < n; k++) {
+                if (rating[k] < rating[j]) {
+                    rightSmaller++;
+                } else if (rating[k] > rating[j]) {
+                    rightGreater++;
+                }
+            }
+
+            count += leftSmaller * rightGreater + leftGreater * rightSmaller;
+        }
+
+        return count;
+    }
+}
+
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of elements in the rating array: ");
+        int n = scanner.nextInt();
+
+        int[] rating = new int[n];
+
+        System.out.println("Enter the elements of the rating array:");
+        for (int i = 0; i < n; i++) {
+            rating[i] = scanner.nextInt();
+        }
+
+        Solution solution = new Solution();
+        int result = solution.numTeams(rating);
+
+        System.out.println("Number of valid teams: " + result);
+    }
+}
+
+// sample inputs : rating = [2,5,3,4,1]
+// Output: 3
+// Explanation: We can form three teams given the conditions. (2,3,4), (5,4,1), (5,3,1). 
